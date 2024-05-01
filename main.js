@@ -27,9 +27,11 @@ function plot() {
     let intensity_coordinates = [];
     let shapes_colors = [];
 
-    for (let i = 0; i < 10000; ++i){
-        x_coordinates[i] = i / 1000;
-        intensity_coordinates[i] = calculateIntensity(x_coordinates[i]);
+    let i = 0;
+    for (let t = -10; t < 10; t += 0.1){
+        x_coordinates[i] = t;
+        intensity_coordinates[i] = calculateIntensity(t);
+        ++i;
     }
 
     let trace1 = {
