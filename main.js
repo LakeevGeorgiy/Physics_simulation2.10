@@ -24,10 +24,10 @@ function plot() {
     let intensity_coordinates = [];
     let shapes = [];
 
-
-    for (let i = 0; i < 1000; ++i) {
-        x_coordinates[i] = i / 10;
-        intensity_coordinates[i] = calculateIntensity(i);
+    let padding = 125;
+    for (let i = -padding; i < padding; ++i) {
+        x_coordinates[i+padding] = i / 10;
+        intensity_coordinates[i+padding] = calculateIntensity(i);
     }
 
     let trace1 = {
@@ -39,8 +39,8 @@ function plot() {
     for (let i = 0; i < x_coordinates.length; ++i){
 
         let currentIntensity = intensity_coordinates[i];
-        let currentColor = 255 * (1 - currentIntensity / 4 * intensity);
-        color=`rgb(${currentColor},${currentColor},${currentColor})`;
+        let currentColor = 255 * (1 - currentIntensity / 4 / intensity);
+        color=`rgba(${currentColor},${currentColor},${currentColor}, 1)`;
 
         shapes[i] = ({
             type: 'rect',
@@ -55,15 +55,13 @@ function plot() {
     }
 
 	let layout1 = {
-        title: 'Несущий сигнал',
+        title: 'Интерференционные полосы',
 		autosize: true,
 		xaxis: {
-			title: 't, c',
             visible: false,
-            range: [0, 100],
+            range: [0, x_coordinates.length],
 		},
 		yaxis: {
-			title: 'A, B',
             range: [0, 10],
             visible: false
 		},
@@ -71,13 +69,13 @@ function plot() {
 	};
 
     let layout2 = {
-        title: 'Несущий сигнал',
+        title: 'График интерферентности',
 		autosize: true,
 		xaxis: {
-			title: 't, c',
+			title: 'x, м',
 		},
 		yaxis: {
-			title: 'A, B',
+			title: 'I, Bт/м^2',
 		},
 	};
 
@@ -90,19 +88,19 @@ button.addEventListener("click", function(e){
 	wave_length = parseFloat(wave_length_text.value);
     wave_length /= (10 ** 9);
 	if (wave_length <= 0) {
-		alert("Частота несущего сигнала должна быть больше 0!");
+		alert("Длина волны должна быть больше 0!");
 		return;
 	}
 	
 	refractive_index1 = parseFloat(refractive_index1_text.value);
 	if (refractive_index1 <= 0) {
-		alert("Частота информационного сигнала должна быть больше 0!");
+		alert("Показатель преломления должен быть больше 0!");
 		return;
 	}
 
     refractive_index2 = parseFloat(refractive_index2_text.value);
 	if (refractive_index2 <= 0) {
-		alert("Частота информационного сигнала должна быть больше 0!");
+		alert("Показатель преломления должен быть больше 0!");
 		return;
 	}
     
@@ -112,18 +110,18 @@ button.addEventListener("click", function(e){
         
     width = parseFloat(width_text.value);
     if (width < 0) {
-        alert("Амплитуда меньше 0!");
+        alert("Расстояние между щелями меньше 0!");
         return;
     }
         
     length = parseFloat(length_text.value);
     if (length < 0) {
-        alert("Амплитуда меньше 0!");
+        alert("Расстояние до экрана меньше 0!");
         return;
     }
         
     if (width > length){
-        alert("Частота информационного сигнала должна быть меньше частоты несущего сигнала!");
+        alert("Расстояние между щелями должно быть меньше расстояния до экрана!");
         return;
     }
 

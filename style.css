@@ -20,7 +20,7 @@ label {
 }
 
 .input-1 {
-    margin-left: 85px;
+    margin-left: 148px;
 }
 
 .input-2 {
@@ -28,11 +28,15 @@ label {
 }
 
 .input-3 {
-    margin-left: 87px;
+    margin-left: 35px;
 }
 
 .input-4 {
-    margin-left: 30px;
+    margin-left: 65px;
+}
+
+.input-5 {
+    margin-left: 100px;
 }
 
 button {
