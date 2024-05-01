@@ -3,6 +3,7 @@ let refractive_index1_text = document.getElementById("refractive_index1_id");
 let refractive_index2_text = document.getElementById("refractive_index2_id");
 let width_text = document.getElementById("width_id");
 let length_text = document.getElementById("length_id");
+let intensity_text = document.getElementById("intensity_id");
 let button = document.getElementById("button_id");
 
 let wave_length = wave_length_text.value;
@@ -10,7 +11,7 @@ let refractive_index1 = refractive_index1_text.value;
 let refractive_index2 = refractive_index2_text.value;
 let width = width_text.value;
 let length = length_text.value;
-let intensity = 1;
+let intensity = intensity_text.value;
 
 function calculateIntensity(x){
     const refractive_index = refractive_index2 / refractive_index1;
@@ -27,7 +28,7 @@ function plot() {
     let padding = 125;
     for (let i = -padding; i < padding; ++i) {
         x_coordinates[i+padding] = i / 10;
-        intensity_coordinates[i+padding] = calculateIntensity(i);
+        intensity_coordinates[i+padding] = calculateIntensity(i/10);
     }
 
     let trace1 = {
@@ -120,6 +121,12 @@ button.addEventListener("click", function(e){
         return;
     }
         
+    intensity = parseFloat(intensity_text.value);
+    if (intensity < 0) {
+        alert("Интенсивность должна быть больше 0!");
+        return;
+    }
+
     if (width > length){
         alert("Расстояние между щелями должно быть меньше расстояния до экрана!");
         return;
