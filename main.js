@@ -20,15 +20,13 @@ function calculateIntensity(x){
 
 function plot() {
 
-    shapes = [];
-
     let x_coordinates = [];
     let intensity_coordinates = [];
-    let shapes_colors = [];
+    let shapes = [];
 
 
     for (let i = 0; i < 1000; ++i) {
-        x_coordinates[i] = i / 100;
+        x_coordinates[i] = i / 10;
         intensity_coordinates[i] = calculateIntensity(i);
     }
 
@@ -38,36 +36,32 @@ function plot() {
         mode: 'line'
     };
 
-    console.log(trace1);
-
-    const rectangleWidth = wave_length * length / width;
-    console.log(x_coordinates.length);
-
     for (let i = 0; i < x_coordinates.length; ++i){
 
         let currentIntensity = intensity_coordinates[i];
-        color=`rgba(${currentIntensity},${currentIntensity},${currentIntensity},0.3)`;
+        color=`rgba(${currentIntensity},${currentIntensity},${currentIntensity})`;
 
-        shapes_colors[i] = ({
+        shapes[i] = ({
             type: 'rect',
             xref: 'x',
             yref: 'y',
             x0: i,
             y0: 0,
-            x1: i + rectangleWidth,
+            x1: i + 1,
             y1: 10,
             fillcolor: color
         });
-    }
 
-    console.log(shapes);
+        console.log(shapes[i]);
+    }
 
 	let layout1 = {
         title: 'Несущий сигнал',
 		autosize: true,
 		xaxis: {
 			title: 't, c',
-            visible: false
+            visible: false,
+            range: [0, 100]
 		},
 		yaxis: {
 			title: 'A, B',
@@ -77,8 +71,19 @@ function plot() {
        shapes
 	};
 
+    let layout2 = {
+        title: 'Несущий сигнал',
+		autosize: true,
+		xaxis: {
+			title: 't, c',
+		},
+		yaxis: {
+			title: 'A, B',
+		},
+	};
+
 	Plotly.react('tester1', [], layout1);
-	Plotly.react('tester2', [trace1], layout1);
+	Plotly.react('tester2', [trace1], layout2);
 	// Plotly.react('tester3', [third], layout3);
 	// Plotly.react('tester4', [fourth], layout4);
 	// Plotly.react('tester5', [fifth], layout5);
