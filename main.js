@@ -39,7 +39,8 @@ function plot() {
     for (let i = 0; i < x_coordinates.length; ++i){
 
         let currentIntensity = intensity_coordinates[i];
-        color=`rgba(${currentIntensity},${currentIntensity},${currentIntensity})`;
+        let currentColor = 255 * (1 - currentIntensity / 4 * intensity);
+        color=`rgb(${currentColor},${currentColor},${currentColor})`;
 
         shapes[i] = ({
             type: 'rect',
@@ -51,8 +52,6 @@ function plot() {
             y1: 10,
             fillcolor: color
         });
-
-        console.log(shapes[i]);
     }
 
 	let layout1 = {
@@ -61,7 +60,7 @@ function plot() {
 		xaxis: {
 			title: 't, c',
             visible: false,
-            range: [0, 100]
+            range: [0, 100],
 		},
 		yaxis: {
 			title: 'A, B',
@@ -84,10 +83,6 @@ function plot() {
 
 	Plotly.react('tester1', [], layout1);
 	Plotly.react('tester2', [trace1], layout2);
-	// Plotly.react('tester3', [third], layout3);
-	// Plotly.react('tester4', [fourth], layout4);
-	// Plotly.react('tester5', [fifth], layout5);
-	// Plotly.react('tester6', [sixth], layout6);
 }
 
 button.addEventListener("click", function(e){
