@@ -15,7 +15,6 @@ let intensity = 1;
 function calculateIntensity(x){
     const refractive_index = refractive_index2 / refractive_index1;
     const phi = 2 * Math.PI / wave_length * (refractive_index * x * width / length);
-    console.log(Math.cos(phi / 2) ** 2);
     return 4 * intensity * Math.cos(phi / 2) ** 2;
 }
 
@@ -27,11 +26,10 @@ function plot() {
     let intensity_coordinates = [];
     let shapes_colors = [];
 
-    let i = 0;
-    for (let t = -10; t < 10; t += 0.1){
-        x_coordinates[i] = t;
-        intensity_coordinates[i] = calculateIntensity(t);
-        ++i;
+
+    for (let i = 0; i < 1000; ++i) {
+        x_coordinates[i] = i / 100;
+        intensity_coordinates[i] = calculateIntensity(i);
     }
 
     let trace1 = {
@@ -43,25 +41,23 @@ function plot() {
     console.log(trace1);
 
     const rectangleWidth = wave_length * length / width;
+    console.log(x_coordinates.length);
 
-    for (let i = 0; i < 10000; ++i){
+    for (let i = 0; i < x_coordinates.length; ++i){
 
-        let currentIntensity = calculateIntensity(x_coordinates[i]);
-        // if ((x / rectangleWidth) % 2 == 0) 
-        //     color=`rgba(${i},0,0,0.3)`;
-        // else
-        //     color = 'rgba(0, 0,0, 0.8)';
+        let currentIntensity = intensity_coordinates[i];
+        color=`rgba(${currentIntensity},${currentIntensity},${currentIntensity},0.3)`;
 
-        // shapes_colors.push({
-        //     type: 'rect',
-        //     xref: 'x',
-        //     yref: 'y',
-        //     x0: x * 100000,
-        //     y0: 0,
-        //     x1: x * 100000 + rectangleWidth * 100000,
-        //     y1: 10,
-        //     fillcolor: color
-        // });
+        shapes_colors[i] = ({
+            type: 'rect',
+            xref: 'x',
+            yref: 'y',
+            x0: i,
+            y0: 0,
+            x1: i + rectangleWidth,
+            y1: 10,
+            fillcolor: color
+        });
     }
 
     console.log(shapes);
